@@ -1,0 +1,212 @@
+WindowManager:
+    RegistrationWindow:
+        id: registrationWindow
+        name: "register"
+
+        MDCard:
+            id: card
+            size_hint: None, None
+            size: 300, 400
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: "vertical"
+
+            MDLabel:
+                id: register_label
+                text: "Регистрация"
+                font_size: 40
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 15
+            MDTextFieldRound:
+                id: register_username
+                hint_text: "Имя пользователя"
+                hint_text_color: 0,0,0,1
+                icon_right: "account"
+                icon_right_color: 0,0,1,1
+                normal_color: 1,1,1,1
+                color_active: .89,.89,.89,1
+                line_color: 0,0,1,1
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {"center_x": 0.5}
+            MDTextFieldRound:
+                id: register_passwd
+                hint_text: "Пароль"
+                hint_text_color: 0,0,0,1
+                icon_right: "eye-off"
+                icon_right_color: 0,0,1,1
+                color_active: .89,.89,.89,1
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {"center_x": 0.5}
+                password: True
+                normal_color: 1,1,1,1
+            MDTextFieldRound:
+                id: current_passwd
+                hint_text: "Повторите пароль"
+                hint_text_color: 0,0,0,1
+                icon_right: "eye-off"
+                icon_right_color: 0,0,1,1
+                color_active: .89,.89,.89,1
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {"center_x": 0.5}
+                password: True
+                normal_color: 1,1,1,1
+            MDRoundFlatButton:
+                id: register_button
+                text: "Зарегистрироваться"
+                pos_hint: {"center_x": 0.5}
+                on_release: app.registerfunc()
+            MDRoundFlatButton:
+                id: swaptologin
+                text: "Войти в учётную запись"
+                pos_hint: {"center_x": 0.5}
+                on_release: app.swaptologin()
+
+
+    LoginWindow:
+        id: loginWindow
+        name: "login"
+
+        MDCard:
+            id: logincard
+            size_hint: None, None
+            size: 300, 400
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            elevation: 10
+            padding: 25
+            spacing: 25
+            orientation: "vertical"
+
+            MDLabel:
+                id: login_label
+                text: "Вход"
+                font_size: 40
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+                padding_y: 15
+            MDTextFieldRound:
+                id: login_username
+                hint_text: "Имя пользователя"
+                hint_text_color: 0,0,0,1
+                icon_right: "account"
+                icon_right_color: 0,0,1,1
+                normal_color: 1,1,1,1
+                color_active: .89,.89,.89,1
+                line_color: 0,0,1,1
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {"center_x": 0.5}
+            MDTextFieldRound:
+                id: login_passwd
+                hint_text: "Пароль"
+                hint_text_color: 0,0,0,1
+                icon_right: "eye-off"
+                icon_right_color: 0,0,1,1
+                color_active: .89,.89,.89,1
+                size_hint_x: None
+                width: 200
+                font_size: 18
+                pos_hint: {"center_x": 0.5}
+                password: True
+                normal_color: 1,1,1,1
+            MDRoundFlatButton:
+                id: login_button
+                text: "Войти в учётную запись"
+                pos_hint: {"center_x": 0.5}
+                on_release: app.enterfunc()
+
+            MDRoundFlatButton:
+                id: swap_to_register
+                text: "Зарегистрироваться"
+                pos_hint: {"center_x": 0.5}
+                on_release: app.swaptoregistr()
+
+            Widget:
+                size_hint_y: None
+                height: 30
+
+    NoteMakerWindow:
+        name: "note_maker"
+        id: note_to_make
+        MDBoxLayout:
+            orientation: "vertical"
+            MDToolbar:
+                title: "Создание заметок"
+                left_action_items: [["arrow-left", lambda x: app.swaptocalendar()]]
+            MDTextField:
+                hint_text: "Название заметки"
+                size_hint: 1,.5
+            TextInput:
+                hint_text: "Впишите содержимое заметки"
+                size_hint: 1,.6
+            Widget:
+                size_hint: 1,.4
+            MDRoundFlatButton:
+                text: "Создать заметку"
+                pos_hint: {"center_x": 0.5}
+                size_hint: None,.4
+
+    CalendarWindow:
+        id: calendarWindow
+        name: "calendar"
+        MDNavigationLayout:
+            id: navigate
+            ScreenManager:
+                Screen:
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        id: md_box_layout
+                        MDToolbar:
+                            md_bg_color: .08,.60,.93,1
+                            title: "Напоминания"
+                            left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                            right_action_items: [["plus", lambda x: app.go_to_note_maker()]]
+
+
+            MDNavigationDrawer:
+                id: nav_drawer
+                MDBoxLayout:
+                    id: box
+                    orientation: "vertical"
+                    MDToolbar:
+                        id: nav_toolbar
+                        md_bg_color: .08,.60,.93,1
+                    MDList:
+                        id: list
+                        OneLineIconListItem:
+                            id: groups
+                            text: "Группы"
+                            IconLeftWidget:
+                                icon: "account-group"
+                        OneLineIconListItem:
+                            id: dark_theme
+                            on_press: app.dark_theme()
+                            text: app.default_theme
+                            IconLeftWidget:
+                                id: icon
+                                icon: "toggle-switch-off-outline"
+                        OneLineIconListItem:
+                            text: "Выход из аккаунта"
+                            on_press: app.log_out()
+                            IconLeftWidget:
+                                icon: "logout"
+
+                    ScrollView:
+
+
+<P>:
+    Label:
+        text: "Пароли не совпадают"
+        size_hint: 0.6, 0.2
+        pos_hint: {"x":0.2, "top": 1}
